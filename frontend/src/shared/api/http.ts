@@ -42,9 +42,14 @@ export async function httpJson<T>(path: string, options: RequestOptions = {}): P
   const body = isJson ? await response.json() : null;
 
   if (!response.ok) {
-    const detail = body && typeof body === "object" && "detail" in body
-      ? String((body as { detail: string }).detail)
-      : `Request failed with status ${response.status}`;
+    let detail =
+      body && typeof body === "object" && "detail" in body
+        ? String((body as { detail: string }).detail)
+        : `Request failed with status ${response.status}`;
+    if (response.status === 404 && API_BASE_URL === "") {
+      detail +=
+        " (No backend for /api. On Vercel set API_GATEWAY_URL to your API origin, or set NEXT_PUBLIC_API_BASE_URL.)";
+    }
     throw new HttpError(response.status, detail);
   }
 
