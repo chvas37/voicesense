@@ -1,4 +1,4 @@
-﻿from dataclasses import dataclass
+from dataclasses import dataclass
 from functools import lru_cache
 import os
 
@@ -26,7 +26,10 @@ class Settings:
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
-    cors_raw = os.getenv("CORS_ORIGINS", "http://localhost:3000")
+    cors_raw = os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:3000,http://127.0.0.1:3000",
+    )
     cors_origins = [origin.strip() for origin in cors_raw.split(",") if origin.strip()]
 
     return Settings(
