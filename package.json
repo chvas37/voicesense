@@ -1,0 +1,9 @@
+{
+  "name": "voicesense-repo",
+  "private": true,
+  "workspaces": ["frontend"],
+  "scripts": {
+    "dev": "npm run dev -w voicesense",
+    "build": "npm run build -w voicesense"
+  }
+}
